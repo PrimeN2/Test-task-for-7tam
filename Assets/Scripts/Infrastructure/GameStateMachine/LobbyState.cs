@@ -9,6 +9,7 @@
 		{
 			_sceneLoader = sceneLoader;
 		}
+
 		public override void Load()
 		{
 			_sceneLoader.LoadScene(GlobalNames.LobbyScene);
@@ -16,7 +17,6 @@
 
 		public override void Dispose()
 		{
-			
 		}
 
 	}

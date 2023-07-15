@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Project.Factories;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Project.Infrastructure
@@ -8,12 +9,13 @@ namespace Project.Infrastructure
 		private List<BaseGameState> _states;
 		private BaseGameState _currentState;
 
-		public GameStateMachine(SceneLoader sceneLoader)
+		public GameStateMachine(SceneLoader sceneLoader, IPlayersFactory playersFactory)
 		{
 			_states = new List<BaseGameState>()
 			{
 				new BootstrapState(this),
 				new LobbyState(this, sceneLoader),
+				new AwaitingState(this, sceneLoader, playersFactory),
 				new GameplayState(this),
 				new VictoryState(this)
 			};

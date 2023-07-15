@@ -2,7 +2,7 @@
 
 namespace Project.Factories
 {
-	public class UIFactory
+	public class UIFactory : IUIFactory
 	{
 		private DiContainer _container;
 

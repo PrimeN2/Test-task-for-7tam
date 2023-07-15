@@ -5,17 +5,17 @@ namespace Project.Infrastructure
 {
 	public class Bootstraper : MonoBehaviour
 	{
-		private GameStateMachine _gameStateMachine;
+		private IGameStateSwitcher _gameStateSwitcher;
 
 		[Inject]
-		private void Construct(GameStateMachine gameStateMachine)
+		private void Construct(IGameStateSwitcher gameStateSwitcher)
 		{
-			_gameStateMachine = gameStateMachine;
+			_gameStateSwitcher = gameStateSwitcher;
 		}
 
 		private void Start()
 		{
-			_gameStateMachine.SwitchState<LobbyState>();
+			_gameStateSwitcher.SwitchState<LobbyState>();
 		}
 	}
 

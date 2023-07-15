@@ -75,3 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneLoaderPrefab: {fileID: 4284746536022360761, guid: add92cf9bbe9c5641969ae1b606d8b0e, type: 3}
+  _eventSystemPrefab: {fileID: 7656912696708504219, guid: ba4001efe653a8b4d81c8f246da13e73, type: 3}
