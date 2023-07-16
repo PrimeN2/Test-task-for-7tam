@@ -19,7 +19,6 @@ namespace Project.Gameplay
 		private List<Player> _players;
 
 		private int _playersAmount;
-		private int _winnersCoins;
 
 		[Inject]
 		private void Construct(
@@ -64,29 +63,19 @@ namespace Project.Gameplay
 		{
 			_players.Remove(player);
 
-			if (_players.Count < 2)
+			if (_players.Count < 2 && _players[0].photonView.IsMine)
 			{
-				photonView.RPC(nameof(RequestOwnerForPlayer), RpcTarget.All, _players[0].Name);
-				_victoryMenu.TurnOn(_players[0].Name, _winnersCoins);
-				_players[0].IsActive = false;
-				_gameStateSwitcher.SwitchState<VictoryState>();
+				photonView.RPC(nameof(RequestOwnerForPlayer), RpcTarget.All, _players[0].Coins);
 			}
 
 		}
 
 		[PunRPC]
-		private void RequestOwnerForPlayer(string playerName)
+		private void RequestOwnerForPlayer(int coins)
 		{
-			if (playerName == _players[0].Name && _players[0].photonView.IsMine)
-			{
-				photonView.RPC(nameof(SetWinnersCoinsForAllClients), RpcTarget.All, _players[0].Coins);
-			}
-		}
-
-		[PunRPC]
-		private void SetWinnersCoinsForAllClients(int coins)
-		{
-			_winnersCoins = coins;
+			_victoryMenu.TurnOn(_players[0].Name, coins);
+			_players[0].IsActive = false;
+			_gameStateSwitcher.SwitchState<VictoryState>();
 		}
 
 		private void StartFight()
