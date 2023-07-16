@@ -7,5 +7,6 @@
 		public const string GameScene = "GameScene";
 
 		public const string PlayerPrefab = "PlayerPrefab";
+		public const string ProjectilePrefab = "ProjectilePrefab";
 	}
 }

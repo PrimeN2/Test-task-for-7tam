@@ -8,31 +8,31 @@ namespace Project.Infrastructure
 {
 	public class AwaitingState : BaseGameState
 	{
-		private readonly IPlayersFactory _playersFactory;
 		private readonly SceneLoader _sceneLoader;
 
+		private PlayersFactory _playersFactory;
+
 		public AwaitingState(
-			IGameStateSwitcher stateSwitcher, SceneLoader sceneLoader, IPlayersFactory playersFactory) 
+			IGameStateSwitcher stateSwitcher, SceneLoader sceneLoader) 
 			: base(stateSwitcher)
 		{
 			_sceneLoader = sceneLoader;
-			_playersFactory = playersFactory;
-		}
-		public override void Load()
-		{
-			_sceneLoader.OnSceneLoaded += GeneratePlayer;
 		}
 
-		private void GeneratePlayer()
+		public override void Load()
 		{
-			_playersFactory.Load();
-			_playersFactory.Create();
+			_sceneLoader.OnSceneLoaded += SpawnPlayer;
 		}
 
 		public override void Dispose()
 		{
-			_sceneLoader.OnSceneLoaded -= GeneratePlayer;
+			_sceneLoader.OnSceneLoaded -= SpawnPlayer;
 		}
 
+		private void SpawnPlayer()
+		{
+			_playersFactory = Object.FindAnyObjectByType<PlayersFactory>();
+			_playersFactory.CreatePlayer();
+		}
 	}
 }

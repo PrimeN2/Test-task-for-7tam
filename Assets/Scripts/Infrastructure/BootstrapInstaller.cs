@@ -1,4 +1,6 @@
 using Project.Factories;
+using Project.Gameplay;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -10,18 +12,16 @@ namespace Project.Infrastructure
 
 		public override void InstallBindings()
 		{
-			BindPlayersFactory();
 			BindSceneLoader();
 			BindGameStateSwitcher();
 			BindUIFactory();
+			BindProjectilesFactory();
 		}
 
-
-		private void BindPlayersFactory()
+		private void BindProjectilesFactory()
 		{
 			Container
-				.Bind<IPlayersFactory>()
-				.To<PlayersFactory>()
+				.Bind<ProjectilesFactory>()
 				.AsSingle();
 		}
 

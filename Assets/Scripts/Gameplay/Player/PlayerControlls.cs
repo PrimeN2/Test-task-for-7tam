@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 
 namespace Project.Gameplay
@@ -11,12 +12,12 @@ namespace Project.Gameplay
 
 		private FloatingJoystick _currentJoystick;
 
-		public void Init()
+		public void Init(Canvas canvas)
 		{
 			if (!_currentJoystick)
 			{
 				_currentJoystick =
-					Instantiate(_joystickPrefab)
+					Instantiate(_joystickPrefab, canvas.transform)
 					.GetComponentInChildren<FloatingJoystick>();
 			}
 		}

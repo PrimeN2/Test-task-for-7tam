@@ -1,51 +1,31 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using Project.Gameplay;
 using UnityEngine;
 using Zenject;
 
 namespace Project.Factories
 {
-	public class PlayersFactory : IPlayersFactory
+	public class PlayersFactory : MonoBehaviourPun
 	{
 		private DiContainer _container;
-
-		private Object _playerPrefab;
-
-		public PlayersFactory(DiContainer container)
-		{
-			_container = container;
-		}
+		private Gameplay.Player _currentPlayer;
 
 		[Inject]
-		private void Construct(DiContainer container) 
+		private void Construct(DiContainer container)
 		{
 			_container = container;
 		}
 
-		public void Load()
+		public void CreatePlayer()
 		{
-			_playerPrefab = Resources.Load(GlobalNames.PlayerPrefab);
-		}
+			_currentPlayer =
+				PhotonNetwork.Instantiate(GlobalNames.PlayerPrefab, Vector2.zero, Quaternion.identity)
+				.GetComponent<Gameplay.Player>();
 
-		public Player Create()
-		{
-			var player =
-				PhotonNetwork.Instantiate(_playerPrefab.name, Vector2.zero, Quaternion.identity)
-				.GetComponent<Player>();
+			_currentPlayer.transform.SetParent(transform);
 
-			BindPlayer(player);
-
-			return player;
-		}
-
-		private void BindPlayer(Player player)
-		{
-			_container.InjectGameObject(player.gameObject);
-
-			_container
-				.Bind<Player>()
-				.FromInstance(player)
-				.AsSingle();
+			_container.InjectGameObject(_currentPlayer.gameObject);
 		}
 	}
 }

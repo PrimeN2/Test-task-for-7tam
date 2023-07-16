@@ -9,13 +9,13 @@ namespace Project.Infrastructure
 		private List<BaseGameState> _states;
 		private BaseGameState _currentState;
 
-		public GameStateMachine(SceneLoader sceneLoader, IPlayersFactory playersFactory)
+		public GameStateMachine(SceneLoader sceneLoader)
 		{
 			_states = new List<BaseGameState>()
 			{
 				new BootstrapState(this),
 				new LobbyState(this, sceneLoader),
-				new AwaitingState(this, sceneLoader, playersFactory),
+				new AwaitingState(this, sceneLoader),
 				new GameplayState(this),
 				new VictoryState(this)
 			};
