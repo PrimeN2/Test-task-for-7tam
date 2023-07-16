@@ -8,12 +8,10 @@
 
 		public override void Dispose()
 		{
-			throw new System.NotImplementedException();
 		}
 
 		public override void Load()
 		{
-			throw new System.NotImplementedException();
 		}
 	}
 }

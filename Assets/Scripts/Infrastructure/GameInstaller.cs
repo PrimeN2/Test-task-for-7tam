@@ -16,6 +16,7 @@ namespace Project.Infrastructure
 		[SerializeField] private Gamefield _gamefield;
 		[SerializeField] private TMP_Text _coinsLabel;
 		[SerializeField] private GameContext _gameContext;
+		[SerializeField] private VictoryMenu _victoryMenu;
 		[SerializeField] private AwaitingLabel _awaitingLabel;
 
 		public override void InstallBindings()
@@ -25,7 +26,16 @@ namespace Project.Infrastructure
 			BindGameContext();
 			BindCoinsLabel();
 			BindGamefield();
+			BindVictoryMenu();
 			BindCanvas();
+		}
+
+		private void BindVictoryMenu()
+		{
+			Container
+				.Bind<VictoryMenu>()
+				.FromInstance(_victoryMenu)
+				.AsSingle();
 		}
 
 		private void BindAwaitingLabel()

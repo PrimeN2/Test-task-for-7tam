@@ -14,17 +14,22 @@ namespace Project.Gameplay
 		private IGameStateSwitcher _gameStateSwitcher;
 
 		private AwaitingLabel _awaitingLabel;
+		private VictoryMenu _victoryMenu;
 		private Button _startButton;
 		private List<Player> _players;
 
 		private int _playersAmount;
+		private int _winnersCoins;
 
 		[Inject]
-		private void Construct(IGameStateSwitcher gameStateSwitcher,Button startButton, AwaitingLabel awaitingLabel)
+		private void Construct(
+			IGameStateSwitcher gameStateSwitcher, Button startButton, AwaitingLabel awaitingLabel,
+			VictoryMenu victoryMenu)
 		{
 			_gameStateSwitcher = gameStateSwitcher;
 			_startButton = startButton;
 			_awaitingLabel = awaitingLabel;
+			_victoryMenu = victoryMenu;
 
 			_players = new List<Player>();
 			_playersAmount = 1;
@@ -55,16 +60,34 @@ namespace Project.Gameplay
 			}
 		}
 
-		public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+		public void RemovePlayer(Player player)
 		{
+			_players.Remove(player);
+
+			if (_players.Count < 2)
+			{
+				photonView.RPC(nameof(RequestOwnerForPlayer), RpcTarget.All, _players[0].Name);
+				_victoryMenu.TurnOn(_players[0].Name, _winnersCoins);
+				_players[0].IsActive = false;
+				_gameStateSwitcher.SwitchState<VictoryState>();
+			}
 
 		}
 
-		public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+		[PunRPC]
+		private void RequestOwnerForPlayer(string playerName)
 		{
-			
+			if (playerName == _players[0].Name && _players[0].photonView.IsMine)
+			{
+				photonView.RPC(nameof(SetWinnersCoinsForAllClients), RpcTarget.All, _players[0].Coins);
+			}
 		}
 
+		[PunRPC]
+		private void SetWinnersCoinsForAllClients(int coins)
+		{
+			_winnersCoins = coins;
+		}
 
 		private void StartFight()
 		{

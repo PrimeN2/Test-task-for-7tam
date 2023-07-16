@@ -22,7 +22,9 @@ namespace Project.Gameplay
 
 		[SerializeField] private float _shootingCooldown = 0.8f;
 
-		public string Name { get; private set; } 
+		public string Name { get; private set; }
+		public int Coins { get; private set; }
+		public bool IsActive;
 
 		private GameContext _gameContext;
 		private TMP_Text _coinsLabel;
@@ -30,7 +32,6 @@ namespace Project.Gameplay
 		private Canvas _canvas;
 		private ProjectilesFactory _projectilesFactory;
 
-		private int _coins;
 
 		[Inject]
 		private void Construct(
@@ -46,7 +47,10 @@ namespace Project.Gameplay
 
 		private void Start()
 		{
+			IsActive = true;
+
 			GetUninjectableComponents();
+
 			_gameContext.AddPlayer(this);
 
 			if (!photonView.IsMine)
@@ -72,8 +76,8 @@ namespace Project.Gameplay
 				if (!photonView.IsMine)
 					return;
 
-				_coins++;
-				_coinsLabel.text = $"Coins: {_coins}";
+				Coins++;
+				_coinsLabel.text = $"Coins: {Coins}";
 				coin.Dispose();
 			}
 		}
@@ -109,7 +113,7 @@ namespace Project.Gameplay
 
 		private IEnumerator PlayerMovement()
 		{
-			while (true)
+			while (IsActive)
 			{
 				MovePlayer();
 				RotateModel();
@@ -122,7 +126,7 @@ namespace Project.Gameplay
 		{
 			float cooldown = _shootingCooldown;
 
-			while (true)
+			while (IsActive)
 			{
 				cooldown -= Time.deltaTime;
 
@@ -165,6 +169,7 @@ namespace Project.Gameplay
 		}
 		private void Dispose()
 		{
+			_gameContext.RemovePlayer(this);
 			photonView.RPC(nameof(RequestOwnerForDispose), RpcTarget.All);
 		}
 
