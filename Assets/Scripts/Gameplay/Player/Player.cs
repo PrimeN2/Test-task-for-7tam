@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -24,6 +25,7 @@ namespace Project.Gameplay
 		public string Name { get; private set; } 
 
 		private GameContext _gameContext;
+		private TMP_Text _coinsLabel;
 		private Gamefield _gamefield;
 		private Canvas _canvas;
 		private ProjectilesFactory _projectilesFactory;
@@ -32,19 +34,19 @@ namespace Project.Gameplay
 
 		[Inject]
 		private void Construct(
-			Gamefield gamefield, Canvas canvas, ProjectilesFactory projectilesFactory)
+			Gamefield gamefield, Canvas canvas, ProjectilesFactory projectilesFactory, TMP_Text coinsLabel)
 		{
 			_gamefield = gamefield;
 			_canvas = canvas;
 			_projectilesFactory = projectilesFactory;
+			_coinsLabel = coinsLabel;
 
 			GetPlayerComponents();
 		}
 
 		private void Start()
 		{
-			_projectilesFactory = new ProjectilesFactory(); 
-			_gameContext = FindObjectOfType<GameContext>();
+			GetUninjectableComponents();
 			_gameContext.AddPlayer(this);
 
 			if (!photonView.IsMine)
@@ -52,6 +54,7 @@ namespace Project.Gameplay
 
 			transform.position = _gamefield.GetRandomPositionOnField();
 		}
+
 
 
 		private void OnTriggerEnter2D(Collider2D collision)
@@ -70,7 +73,8 @@ namespace Project.Gameplay
 					return;
 
 				_coins++;
-				PhotonNetwork.Destroy(coin.gameObject);
+				_coinsLabel.text = $"Coins: {_coins}";
+				coin.Dispose();
 			}
 		}
 
@@ -169,6 +173,11 @@ namespace Project.Gameplay
 		{
 			if (photonView.IsMine)
 				PhotonNetwork.Destroy(gameObject);
+		}
+		private void GetUninjectableComponents()
+		{
+			_projectilesFactory = new ProjectilesFactory();
+			_gameContext = FindObjectOfType<GameContext>();
 		}
 	}
 }

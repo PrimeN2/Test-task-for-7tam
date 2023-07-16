@@ -2,6 +2,7 @@
 using Project.Gameplay;
 using Project.UI;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -13,6 +14,7 @@ namespace Project.Infrastructure
 		[SerializeField] private Canvas _canvas;
 		[SerializeField] private Button _startButton;
 		[SerializeField] private Gamefield _gamefield;
+		[SerializeField] private TMP_Text _coinsLabel;
 		[SerializeField] private GameContext _gameContext;
 		[SerializeField] private AwaitingLabel _awaitingLabel;
 
@@ -21,6 +23,7 @@ namespace Project.Infrastructure
 			BindAwaitingLabel();
 			BindStartButton();
 			BindGameContext();
+			BindCoinsLabel();
 			BindGamefield();
 			BindCanvas();
 		}
@@ -54,6 +57,14 @@ namespace Project.Infrastructure
 			Container
 				.Bind<GameContext>()
 				.FromInstance(_gameContext)
+				.AsSingle();
+		}
+
+		private void BindCoinsLabel()
+		{
+			Container
+				.Bind<TMP_Text>()
+				.FromInstance(_coinsLabel)
 				.AsSingle();
 		}
 
