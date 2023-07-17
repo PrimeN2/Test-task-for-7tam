@@ -15,9 +15,7 @@ namespace Project.Infrastructure
 			{
 				new BootstrapState(this),
 				new LobbyState(this, sceneLoader),
-				new AwaitingState(this, sceneLoader),
-				new GameplayState(this),
-				new VictoryState(this)
+				new GameplayState(this, sceneLoader),
 			};
 
 			_currentState = _states[0];

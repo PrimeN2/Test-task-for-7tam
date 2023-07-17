@@ -18,8 +18,6 @@ namespace Project.Gameplay
 		private Button _startButton;
 		private List<Player> _players;
 
-		private int _playersAmount;
-
 		[Inject]
 		private void Construct(
 			IGameStateSwitcher gameStateSwitcher, Button startButton, AwaitingLabel awaitingLabel,
@@ -31,7 +29,6 @@ namespace Project.Gameplay
 			_victoryMenu = victoryMenu;
 
 			_players = new List<Player>();
-			_playersAmount = 1;
 		}
 
 		public override void OnEnable()
@@ -106,7 +103,6 @@ namespace Project.Gameplay
 		private void RequestOwnerForPlayer(string name, int coins)
 		{
 			_victoryMenu.TurnOn(name, coins);
-			_gameStateSwitcher.SwitchState<VictoryState>();
 		}
 
 		private void StartFight()

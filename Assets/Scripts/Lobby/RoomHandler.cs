@@ -18,13 +18,13 @@ namespace Project.Lobby
 		public void CreateRoom(string roomName)
 		{
 			PhotonNetwork.CreateRoom(roomName);
-			_gameStateSwitcher.SwitchState<AwaitingState>();
+			_gameStateSwitcher.SwitchState<GameplayState>();
 		}
 
 		public void JoinRoom(string roomName)
 		{
 			PhotonNetwork.JoinRoom(roomName);
-			_gameStateSwitcher.SwitchState<AwaitingState>();
+			_gameStateSwitcher.SwitchState<GameplayState>();
 		}
 	}
 }
