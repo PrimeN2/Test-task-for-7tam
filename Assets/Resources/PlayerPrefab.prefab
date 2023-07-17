@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 742291650383051754}
   - component: {fileID: 8184873623385628546}
   - component: {fileID: 7882178203938437603}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NameLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,8 +176,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1317598577
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8184873623385628546
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 7816708782724711332}
   - component: {fileID: 7208301429705691983}
   - component: {fileID: 5693147957618709470}
-  - component: {fileID: -5848747761506769380}
+  - component: {fileID: 1525069925110141568}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -354,6 +354,7 @@ MonoBehaviour:
   _speed: 10
   _rotationSpeed: 720
   _shootingCooldown: 0.8
+  IsActive: 0
 --- !u!114 &-4668551722154981616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7300a594604bb468fd432da096647b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _joystickPrefab: {fileID: 8504051766389538474, guid: af0f67b75d0d19c44be18a94116b7b45, type: 3}
+  _joystickPrefab: {fileID: 8504051766389538474, guid: af0f67b75d0d19c44be18a94116b7b45,
+    type: 3}
 --- !u!114 &866546907354542095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,7 +434,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
   m_UseLocal: 0
---- !u!50 &-5848747761506769380
+--- !u!50 &1525069925110141568
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -440,7 +442,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3556803723984556637}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -512,7 +514,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 1317598577
+  m_SortingLayerID: -44025399
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7065425326771471423
@@ -660,10 +662,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 78d03ce1d36c540d5a183e4b042d3afb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -691,7 +693,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.3333334, y: 1.3333334}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

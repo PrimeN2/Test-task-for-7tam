@@ -34,14 +34,6 @@ namespace Project.Gameplay
 		public void Dispose()
 		{
 			Destroy(gameObject);
-			//photonView.RPC(nameof(RequestMasterForDestroy), RpcTarget.All);
 		}
-
-		//[PunRPC]
-		//private void RequestMasterForDestroy()
-		//{
-		//	if (photonView.IsMine)
-		//		PhotonNetwork.Destroy(gameObject);
-		//}
 	}
 }

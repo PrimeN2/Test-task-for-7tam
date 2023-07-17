@@ -7,7 +7,7 @@ namespace Project.Gameplay
 	{
 		public Vector3 GetRandomPositionOnField()
 		{
-			return new Vector2(Random.Range(8.4f, -8.4f), Random.Range(4.5f, -4.5f));
+			return new Vector2(Random.Range(8.2f, -8.2f), Random.Range(4.3f, -4.3f));
 		}
 	}
 }

@@ -55,7 +55,35 @@ namespace Project.Gameplay
 			if (PhotonNetwork.IsMasterClient)
 			{
 				if (_players.Count > 1)
+				{
 					_startButton.gameObject.SetActive(true);
+
+					SyncPlayersNames();
+				}
+			}
+		}
+
+		private void SyncPlayersNames()
+		{
+			object[] names = new object[_players.Count];
+
+			for (int i = 0; i < _players.Count; i++)
+			{
+				names[i] = _players[i].Name;
+			}
+
+			photonView.RPC(nameof(RequestSyncPlayersNames), RpcTarget.All, names);
+		}
+
+		[PunRPC]
+		private void RequestSyncPlayersNames(object[] names)
+		{
+			if (PhotonNetwork.IsMasterClient)
+				return;
+
+			for (int i = _players.Count - 1; i >= 0; i--)
+			{
+				_players[i].SetName((string)names[i]);
 			}
 		}
 
@@ -63,18 +91,21 @@ namespace Project.Gameplay
 		{
 			_players.Remove(player);
 
-			if (_players.Count < 2 && _players[0].photonView.IsMine)
+			if (_players.Count < 2)
 			{
-				photonView.RPC(nameof(RequestOwnerForPlayer), RpcTarget.All, _players[0].Coins);
+				_players[0].IsActive = false;
+
+				if(_players[0].photonView.IsMine)
+					photonView.RPC(
+						nameof(RequestOwnerForPlayer), RpcTarget.All, _players[0].Name, _players[0].Coins);
 			}
 
 		}
 
 		[PunRPC]
-		private void RequestOwnerForPlayer(int coins)
+		private void RequestOwnerForPlayer(string name, int coins)
 		{
-			_victoryMenu.TurnOn(_players[0].Name, coins);
-			_players[0].IsActive = false;
+			_victoryMenu.TurnOn(name, coins);
 			_gameStateSwitcher.SwitchState<VictoryState>();
 		}
 

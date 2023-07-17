@@ -24,6 +24,8 @@ namespace Project.Gameplay
 
 		public string Name { get; private set; }
 		public int Coins { get; private set; }
+
+		[HideInInspector]
 		public bool IsActive;
 
 		private GameContext _gameContext;
@@ -170,15 +172,17 @@ namespace Project.Gameplay
 		private void Dispose()
 		{
 			_gameContext.RemovePlayer(this);
-			photonView.RPC(nameof(RequestOwnerForDispose), RpcTarget.All);
+			StartCoroutine(DelayedDispose());
 		}
 
-		[PunRPC]
-		private void RequestOwnerForDispose()
+		private IEnumerator DelayedDispose()
 		{
+			yield return new WaitForSeconds(0.2f);
+
 			if (photonView.IsMine)
 				PhotonNetwork.Destroy(gameObject);
 		}
+
 		private void GetUninjectableComponents()
 		{
 			_projectilesFactory = new ProjectilesFactory();
